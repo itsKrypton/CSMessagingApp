@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3500
 app.use('/', express.static(path.join(__dirname, '/public'))) //Tells express where to look for static files
 
 app.use('/', require('./routes/root'))
+app.use('/allUsers', require('./routes/api/queries'))
 
 app.all('*', (req, res) => {
     res.status(404)

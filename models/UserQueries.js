@@ -5,8 +5,8 @@ const QueriesSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    timestamp: {
-        type: String,
+    date: {
+        type: Date,
         required: true,
     },
     message: {
@@ -15,5 +15,5 @@ const QueriesSchema = new mongoose.Schema({
     },
 })
 
-const queryModel = mongoose.model("userQueries", QueriesSchema)
-module.exports = queryModel
+const UserQueries = mongoose.model("userQueries", QueriesSchema)
+module.exports = UserQueries
