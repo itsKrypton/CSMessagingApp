@@ -1,13 +1,18 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
 const path = require('path')
-const { logger } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
+const connectDB = require('./config/dbConn')
+const mongoose = require('mongoose')
+const { logger, logEvents } = require('./middleware/logger')
 const PORT = process.env.PORT || 3500
+
+mongoose.set('strictQuery', false)
+connectDB()
 
 app.use(logger)
 
@@ -21,7 +26,7 @@ app.use('/', express.static(path.join(__dirname, '/public'))) //Tells express wh
 
 app.use('/', require('./routes/root')) // This will take you to the homepage
 
-app.use('/queries', require('./routes/api/queries')) // /queries would take you to routes/api
+app.use('/tickets', require('./routes/api/tickets')) // /queries would take you to tickets/api
 
 app.all('*', (req, res) => {
     res.status(404)
@@ -38,9 +43,14 @@ app.all('*', (req, res) => {
     }
 })
 
-mongoose.set('strictQuery', false)
-mongoose.connect('mongodb+srv://CsMessagingApp:cs123messaging123app123@cluster0.knsc5up.mongodb.net/?retryWrites=true&w=majority')
-
 app.use(errorHandler)
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB')
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+})
+
+mongoose.connection.on('error', err => {
+    console.log(err)
+    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
+})
