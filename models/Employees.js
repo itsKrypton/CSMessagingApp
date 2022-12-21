@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const EmployeesSchema = new mongoose.Schema({
     employeeID: {
-        type: Number,
+        type: String,
         required: true
     },
     assignedTickets: [{

@@ -3,7 +3,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const TicketsSchema = new mongoose.Schema({
     userID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.Number,
         required: true,
         ref: 'Users'
     },

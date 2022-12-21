@@ -26,7 +26,9 @@ app.use('/', express.static(path.join(__dirname, '/public'))) //Tells express wh
 
 app.use('/', require('./routes/root')) // This will take you to the homepage
 
-app.use('/tickets', require('./routes/api/tickets')) // /queries would take you to tickets/api
+//app.use('/tickets', require('./routes/api/tickets')) // /queries would take you to tickets/api
+
+app.use('/users', require('./routes/api/userRoutes'))
 
 app.all('*', (req, res) => {
     res.status(404)
