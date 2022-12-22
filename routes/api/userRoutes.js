@@ -5,6 +5,8 @@ const conversationsController = require('../../controllers/conversationsControll
 
 router.route('/').get(usersController.getUser)
 
-router.route('/conversation').get(conversationsController.getConversation)
+router.route('/conversation')
+    .get(conversationsController.getConversation)
+    .post(conversationsController.initiateUpdateConversation)
 
 module.exports = router

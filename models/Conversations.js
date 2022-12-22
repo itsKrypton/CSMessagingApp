@@ -8,7 +8,11 @@ const MessageSchema = new mongoose.Schema({
     message: {
         type: String,
         required: true
-    }
+    },
+    date: {
+        type: Date,
+        required: true
+    },
 })
 
 const ConversationsSchema = new mongoose.Schema({
@@ -20,7 +24,7 @@ const ConversationsSchema = new mongoose.Schema({
     },
     employeeID: {
         type: mongoose.Schema.Types.String,
-        required: true,
+        default: null,
         ref: 'Employees'
     }
 })
