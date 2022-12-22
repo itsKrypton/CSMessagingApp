@@ -11,8 +11,8 @@ const MessageSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
-    },
+        default: Date.now
+    }
 })
 
 const ConversationsSchema = new mongoose.Schema({
@@ -26,6 +26,10 @@ const ConversationsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         default: null,
         ref: 'Employees'
+    },
+    isImportant: {
+        type: Boolean,
+        default: false
     }
 })
 

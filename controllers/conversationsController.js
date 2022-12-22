@@ -2,6 +2,7 @@
 const Conversations = require('../models/Conversations')
 const asyncHandler = require('express-async-handler')
 const Employees = require('../models/Employees')
+const impKeywords = ["payment", "loan", "fees", "salary", "amount"]
 
 // @desc Get conversation of user
 // @route GET /users/conversation
@@ -38,9 +39,18 @@ const initiateUpdateConversation = asyncHandler(async (req, res) => {
     }
 
     let conversation = await Conversations.findOne({userID: userID})
-    const newMessageObject = {"sender": "Client", "message": message, "date": date}
+    const newMessageObject = {"sender": "Client", "message": message/* , "date": date */}
     if(conversation) { // Conversation already exists so we simply add the new message into it.
         conversation.messages.push(newMessageObject)
+        
+        if(!conversation.isImportant)
+        {
+            const containsWord = impKeywords.some(word => message.includes(word))
+            if(containsWord) {
+                conversation.isImportant = true
+            }
+        }
+
         conversation.save()
     }
 
