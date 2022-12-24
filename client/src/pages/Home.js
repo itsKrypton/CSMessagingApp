@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import Axios from "axios"
-import { loginUser } from "./store"
+import { loginUser } from "./storeUser"
 import { useDispatch } from "react-redux"
+import { loginEmployee } from "./storeEmployee"
 
 export const Home = () => {
     const [userInput, setUserInput] = useState(0)
+    const [employeeInput, setEmployeeInput] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -19,7 +21,14 @@ export const Home = () => {
         navigate('/users')
     }
 
-    const signInAsEmp = () => {
+    const signInAsEmp = async () => {
+        console.log("Inside fun")
+        await Axios.get('http://localhost:3500/employees', {
+            params: {
+                employeeID: employeeInput
+            }
+        }).then(res => dispatch(loginEmployee({ employeeName: res.data.employeeID})))
+
         navigate('/employees')
     }
 
@@ -32,7 +41,7 @@ export const Home = () => {
             </div>
             <div className="EmployeeLogin"> 
                 <h1> Employee </h1>
-                <input placeholder="Enter your EmployeeID"/>
+                <input placeholder="Enter your EmployeeID" onChange={(event) => setEmployeeInput(event.target.value)}/>
                 <button onClick={signInAsEmp}> Login as Employee </button>
             </div>
         </div>
