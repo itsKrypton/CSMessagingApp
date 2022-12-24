@@ -2,61 +2,198 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  height: 100vh;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  --border--radius: 4px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.navbar {
+  width: 100%;
+  height: 80px;
+  background-color: slateblue;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: flex-end;
+}
+
+.navbar .links {
+  text-align: center;
+  margin-right: 50px;
+}
+
+.links a {
   color: white;
+  text-decoration: none;
+  border-bottom: 3px solid white;
+  padding-bottom: 2px;
+  margin: 10px;
+  font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+.navbar #logo {
+  font-size: 25px;
+  border-bottom: 0px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.links :hover {
+  color: antiquewhite;
 }
 
-.Header {
-  border: 10px solid black;
-  background-color: aqua;
+.navbar .user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
 }
 
-.User {
-  border: 10px solid black;
-  margin: 50px;
-  margin-left: 10rem;
-  padding: 10px;
-  float: left;
-  background-color: aqua;
+.user p {
+  font-size: 25px;
+  margin-right: 20px;
+  color: white;
+  font-weight: bold;
 }
 
-.Employee {
-  border: 10px solid black;
-  margin: 50px;
-  margin-right: 10rem;
-  padding: 10px;
-  float: right;
-  background-color: aqua;
+.HomeContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.UserLogin {
+  width: 400px;
+  max-width: 400px;
+  margin: 10rem;
+  padding: 2rem;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background: #ffffff;
+  /* margin-left: 10rem;
+  margin-top: 15rem; */
+}
+
+.UserLogin > *:first-child {
+  margin-top: 0;
+}
+
+.UserLogin > *:last-child {
+  margin-bottom: 0;
+}
+
+.EmployeeLogin {
+  width: 400px;
+  max-width: 400px;
+  margin: 10rem;
+  padding: 2rem;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background: #ffffff;
+  /* margin-right: 10rem;
+  margin-top: 15rem; */
+}
+
+.EmployeeLogin > *:first-child {
+  margin-top: 0;
+}
+
+.EmployeeLogin > *:last-child {
+  margin-bottom: 0;
+}
+
+.UserContainer {
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.YourConversation {
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.UserChatBox {
+  width: 1000px;
+  max-width: 1000px;
+  height: 600px;
+  max-height: 500px;
+  margin: 2rem;
+  padding: 2rem;
+  overflow: auto;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: #ffffff;
+  margin-left: 26rem;
+}
+
+.SendBox {
+  width: 1050px;
+  max-width: 1050px;
+  margin-left: 26rem;
+}
+
+#userSendButton {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+  margin-left: 10px;
+}
+
+#userInputBox {
+  background: lightcyan;
+  border-radius: 999px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+  width: 54rem;
+  margin-left: 10px;
+}
+
+#Message {
+  font-family: CerebriSans-Bold, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+#Sender {
+  font-family: CerebriSans-Bold, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-bottom: 0;
+  text-align: left;
 }
 

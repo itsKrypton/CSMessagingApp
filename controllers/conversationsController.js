@@ -5,14 +5,16 @@ const Employees = require('../models/Employees')
 const impKeywords = ["payment", "loan", "fees", "salary", "amount"]
 
 // @desc Get conversation of user
-// @route GET /users/conversation
+// @route GET /users/conversation?userID:(number)
 // @access Private
 const getConversation = asyncHandler(async (req, res) => {
-    const { userID } = req.body
+    if(!req.query.userID) {
+        return res.status(400).json({ message: 'UserID is required'})
+    }
 
-    const conversation = await Conversations.findOne({userID: userID})
+    const conversation = await Conversations.findOne({userID: req.query.userID})
     if(!conversation) {
-        return res.status(400).json({ message: 'No conversation found'})
+        return res.json([{ message: 'No conversation found'}])
     }
     res.json(conversation.messages)
 })
@@ -39,7 +41,7 @@ const initiateUpdateConversation = asyncHandler(async (req, res) => {
     }
 
     let conversation = await Conversations.findOne({userID: userID})
-    const newMessageObject = {"sender": "Client", "message": message/* , "date": date */}
+    const newMessageObject = {"sender": "Client", "message": message, "date": date}
     if(conversation) { // Conversation already exists so we simply add the new message into it.
         conversation.messages.push(newMessageObject)
         
