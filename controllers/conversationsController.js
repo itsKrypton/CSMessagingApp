@@ -124,6 +124,15 @@ const updateEmpConversation = asyncHandler(async (req, res) => {
 
     const newMessageObject = {"sender": "Support", "message": message, "date": date}
     conversation.messages.push(newMessageObject)
+
+    if(!conversation.isImportant)
+    {
+        const containsWord = impKeywords.some(word => message.includes(word))
+        if(containsWord) {
+            conversation.isImportant = true
+        }
+    }
+
     conversation.save()
 
     return res.json(conversation)
@@ -135,7 +144,7 @@ const updateEmpConversation = asyncHandler(async (req, res) => {
 const deleteConversation = asyncHandler(async (req, res) => {
     const { userID, employeeID } = req.body
 
-    const result = await Conversations.findOneAndDelete({"userID": userID})
+    const result = await Conversations.findOneAndDelete({userID: userID})
     const reply = `Ticket of User ID: ${result.userID} has been deleted by ${result.employeeID}`
 
     const employee = await Employees.findOne({"employeeID": employeeID})

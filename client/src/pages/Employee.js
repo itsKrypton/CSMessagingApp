@@ -7,6 +7,7 @@ export const Employee = () => {
     const employee = useSelector((state) => state.employee.value.employeeDetails)
     const [conversation, setConversation] = useState({})
     const [userInput, setUserInput] = useState("")
+    const [hideBar, setHideBar] = useState(false)
 
     const { data, isLoading } = useQuery(["allTickets"], () => {
         return Axios.get('http://localhost:3500/employees/conversation').then(res => res.data)
@@ -26,7 +27,7 @@ export const Employee = () => {
     }
 
     const assignTicket = async (ticketNumber) => {
-        Axios.patch('http://localhost:3500/employees', {
+        await Axios.patch('http://localhost:3500/employees', {
             userID: ticketNumber,
             employeeID: employee.employeeID
         }).then(() => alert(`Ticket #${ticketNumber} has been assigned.`))
@@ -37,7 +38,10 @@ export const Employee = () => {
             params: {
                 userID: ticketNumber
             }
-        }).then((res) => setConversation(res.data))
+        }).then((res) => {
+            setHideBar(true)
+            setConversation(res.data)
+        })
     }
 
     const sendNewMessage = async () => {
@@ -49,18 +53,26 @@ export const Employee = () => {
         }).then((res) => setConversation(res.data))
     }
 
+    const closeConversation = async (ticketNumber) => { // Important, delete axios requests need the data keyword to send the request body payload.
+        await Axios.delete('http://localhost:3500/employees/conversation', {
+            data: {
+                userID: ticketNumber,
+                employeeID: employee.employeeID
+            }
+        }).then(() => alert(`Ticket #${ticketNumber} has been closed.`))
+    }
+
     return (
         <div className="EmployeeContainer">
             <div className="Tickets">
                 <div>
-                    {data?.length && <h3> Your Tickets </h3>}
+                    {(employee.assignedTickets?.length > 1) && <h3> Your Tickets </h3>}
                     {data?.map((ticket) => {
                         return (
                             <div>
-                                {/* !employee.assignedTickets.includes(ticket.userID) && <p> {ticket.userID} </p> */}
-                                {(employee.employeeID === ticket.employeeID) && <p onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
+                                {(employee.employeeID === ticket.employeeID) && <p style={{ color: ticket.isImportant ? "red" : "black" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
                                 {(employee.employeeID === ticket.employeeID) && <button onClick={() => unAssignTicket(ticket.userID)}> Unassign </button>}
-                                {(employee.employeeID === ticket.employeeID) && <button> Close </button>}
+                                {(employee.employeeID === ticket.employeeID) && <button onClick={() => closeConversation(ticket.userID)}> Close </button>}
                             </div>
                         )
                     })}
@@ -70,10 +82,9 @@ export const Employee = () => {
                     {data?.map((ticket) => {
                         return (
                             <div>
-                                {/* !employee.assignedTickets.includes(ticket.userID) && <p> {ticket.userID} </p> */}
-                                {!(employee.employeeID === ticket.employeeID) && <p onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
-                                {!(employee.employeeID === ticket.employeeID) && <button onClick={() => assignTicket(ticket.userID)}> Assign </button>}
-                                {!(employee.employeeID === ticket.employeeID) && <button> Close </button>}
+                                {!(employee.employeeID === ticket.employeeID) && <p style={{ color: ticket.isImportant ? "red" : "black" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
+                                {!(employee.employeeID === ticket.employeeID) && <button disabled={ticket.employeeID !== null} onClick={() => assignTicket(ticket.userID)}> Assign </button>}
+                                {!(employee.employeeID === ticket.employeeID) && <button onClick={() => closeConversation(ticket.userID)} disabled={ticket.employeeID !== null}> Close </button>}
                             </div>
                         )
                     })}
@@ -91,8 +102,8 @@ export const Employee = () => {
                     })}
                 </div>
                 <div>
-                    <input placeholder="Type here" id="userInputBox" onChange={(event) => setUserInput(event.target.value)}/>
-                    <button id="userSendButton" onClick={sendNewMessage}> Send Message </button>
+                    {hideBar && <input placeholder="Type here" disabled={!(conversation?.employeeID === employee.employeeID)} id="userInputBox" onChange={(event) => setUserInput(event.target.value)}/>}
+                    {hideBar && <button id="userSendButton" disabled={!(conversation?.employeeID === employee.employeeID)} onClick={sendNewMessage}> Send Message </button>}
                 </div>
             </div>
         </div>
