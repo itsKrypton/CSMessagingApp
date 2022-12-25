@@ -65,26 +65,26 @@ export const Employee = () => {
     return (
         <div className="EmployeeContainer">
             <div className="Tickets">
-                <div>
-                    {(employee.assignedTickets?.length > 1) && <h3> Your Tickets </h3>}
+                <div className="YourTicketsContainer">
+                    {(employee.assignedTickets?.length > 1) && <h3 id="YourTickets"> Your Tickets </h3>}
                     {data?.map((ticket) => {
                         return (
-                            <div>
-                                {(employee.employeeID === ticket.employeeID) && <p style={{ color: ticket.isImportant ? "red" : "black" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
-                                {(employee.employeeID === ticket.employeeID) && <button onClick={() => unAssignTicket(ticket.userID)}> Unassign </button>}
-                                {(employee.employeeID === ticket.employeeID) && <button onClick={() => closeConversation(ticket.userID)}> Close </button>}
+                            <div className="indYourTicketsContainer">
+                                {(employee.employeeID === ticket.employeeID) && <p id="indYourTickets" style={{ color: ticket.isImportant ? "red" : "white" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
+                                {(employee.employeeID === ticket.employeeID) && <button id="ticketButtonsUnassign" onClick={() => unAssignTicket(ticket.userID)}> Unassign </button>}
+                                {(employee.employeeID === ticket.employeeID) && <button id="ticketButtonsUnassign" onClick={() => closeConversation(ticket.userID)}> Close </button>}
                             </div>
                         )
                     })}
                 </div>
-                <div>
-                    {data?.length && <h3> Open Tickets </h3>}
+                <div className="OpenTicketsContainer">
+                    {data?.length && <h3 id="OpenTickets"> Open Tickets </h3>}
                     {data?.map((ticket) => {
                         return (
-                            <div>
-                                {!(employee.employeeID === ticket.employeeID) && <p style={{ color: ticket.isImportant ? "red" : "black" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
-                                {!(employee.employeeID === ticket.employeeID) && <button disabled={ticket.employeeID !== null} onClick={() => assignTicket(ticket.userID)}> Assign </button>}
-                                {!(employee.employeeID === ticket.employeeID) && <button onClick={() => closeConversation(ticket.userID)} disabled={ticket.employeeID !== null}> Close </button>}
+                            <div className="indOpenTicketsContainer">
+                                {!(employee.employeeID === ticket.employeeID) && <p id="indOpenTickets" style={{ color: ticket.isImportant ? "red" : "white" }} onClick={() => showConversation(ticket.userID)}> {ticket.userID} </p>}
+                                {!(employee.employeeID === ticket.employeeID) && <button id="ticketButtonsAssign" disabled={ticket.employeeID !== null} onClick={() => assignTicket(ticket.userID)}> Assign </button>}
+                                {!(employee.employeeID === ticket.employeeID) && <button id="ticketButtonsAssign" onClick={() => closeConversation(ticket.userID)} disabled={ticket.employeeID !== null}> Close </button>}
                             </div>
                         )
                     })}

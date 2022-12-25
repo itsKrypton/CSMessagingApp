@@ -35,14 +35,14 @@ export const Home = () => {
     return (
         <div className="HomeContainer"> 
             <div className="UserLogin"> 
-                <h1> User </h1>
-                <input type="number" placeholder="Enter your UserID" onChange={(event) => setUserInput(event.target.value)}/>
-                <button onClick={signInAsUser}> Login as User </button>
+                <h1 style={{color: "slateblue"}}> User </h1>
+                <input type="number" inputMode="numeric" id="HomeInputBox" placeholder="Enter your UserID" onChange={(event) => setUserInput(event.target.value)}/>
+                <button id="HomeButton" onClick={signInAsUser}> Login as User </button>
             </div>
             <div className="EmployeeLogin"> 
-                <h1> Employee </h1>
-                <input placeholder="Enter your EmployeeID" onChange={(event) => setEmployeeInput(event.target.value)}/>
-                <button onClick={signInAsEmp}> Login as Employee </button>
+                <h1 style={{color: "slateblue"}}> Employee </h1>
+                <input placeholder="Enter your EmployeeID" id="HomeInputBox" onChange={(event) => setEmployeeInput(event.target.value)}/>
+                <button id="HomeButton" onClick={signInAsEmp}> Login as Employee </button>
             </div>
         </div>
     );

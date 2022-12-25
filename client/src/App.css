@@ -16,7 +16,7 @@ body {
   background-color: slateblue;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .navbar .links {
@@ -49,58 +49,119 @@ body {
   margin-right: 50px;
 }
 
+#logo {
+  margin-right: 2rem;
+  margin-left: 2.5rem;
+}
+
 .user p {
   font-size: 25px;
-  margin-right: 20px;
+  margin-left: 75rem;
   color: white;
   font-weight: bold;
 }
 
 .HomeContainer {
   display: flex;
-  justify-content: center;
+  width: 1600px;
+  max-width: 1600px;
+  height: 750px;
+  max-height: 750px;
+  margin: 2rem;
+  padding: 1rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: whitesmoke;
+  margin-left: 8rem;
+  margin-top: 3rem;
 }
 
 .UserLogin {
+  margin: 5rem;
+  margin-left: 15rem;
+  margin-top: 10rem;
   width: 400px;
   max-width: 400px;
-  margin: 10rem;
-  padding: 2rem;
-  justify-content: center;
+  height: 400px;
+  max-height: 400px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-  border-radius: var(--border-radius);
+  border-radius: 15px;
   background: #ffffff;
-  /* margin-left: 10rem;
-  margin-top: 15rem; */
 }
 
 .UserLogin > *:first-child {
-  margin-top: 0;
+  margin-top: 7rem;
 }
 
 .UserLogin > *:last-child {
-  margin-bottom: 0;
+  margin-bottom: 5rem;
 }
 
 .EmployeeLogin {
+  margin: 5rem;
+  margin-left: 15rem;
+  margin-top: 10rem;
   width: 400px;
   max-width: 400px;
-  margin: 10rem;
-  padding: 2rem;
-  justify-content: center;
+  height: 400px;
+  max-height: 400px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-  border-radius: var(--border-radius);
+  border-radius: 15px;
   background: #ffffff;
-  /* margin-right: 10rem;
-  margin-top: 15rem; */
 }
 
 .EmployeeLogin > *:first-child {
-  margin-top: 0;
+  margin-top: 7rem;
 }
 
 .EmployeeLogin > *:last-child {
-  margin-bottom: 0;
+  margin-bottom: 5rem;
+}
+
+#HomeInputBox {
+  background: white;
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  color: black;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  appearance: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+  width: 18rem;
+}
+
+#HomeButton {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 8px 18px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+  word-break: break-word;
+  border: 0;
+  margin-top: 1.5rem;
 }
 
 .UserContainer {
@@ -217,7 +278,8 @@ body {
   overflow-y: auto;
   width: 350px;
   max-width: 350px;
-  background-color: #5E5DF0;
+  /* background-color: #5E5DF0; */
+  background-color: slateblue;
   border-radius: 15px;
   justify-content: left;
 }
@@ -228,5 +290,96 @@ body {
 
 .Tickets > *:last-child {
   margin-bottom: 25px;
+}
+
+#YourTickets, #OpenTickets {
+  font-size: 25px;
+  color: white;
+  font-weight: bold;
+}
+
+#indYourTickets, #indOpenTickets {
+  font-size: 18px;
+  font-weight: bold;
+  width: 150px;
+  max-width: 150px;
+  justify-content: top;
+}
+
+.indYourTicketsContainer, .indOpenTicketsContainer {
+  justify-content: left;
+  display: flex;
+  max-height: 47px;
+}
+
+.YourTicketsContainer, .OpenTicketsContainer {
+  justify-content: left;
+}
+
+#ticketButtonsAssign {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 2px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  word-break: break-word;
+  border: 0;
+  margin-left: 3px;
+  margin-right: 18px;
+  height: 35px;
+}
+
+button:disabled {
+  color: black !important;
+  cursor: default !important;
+}
+
+#ticketButtonsUnassign {
+  background: #5E5DF0;
+  border-radius: 999px;
+  box-shadow: #5E5DF0 0 10px 20px -10px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 24px;
+  opacity: 1;
+  outline: 0 solid transparent;
+  padding: 2px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100px;
+  word-break: break-word;
+  border: 0;
+  margin-left: 3px;
+  margin-right: 18px;
+  height: 35px;
+}
+
+.EmployeeChatBox {
+  width: 1000px;
+  max-width: 1000px;
+  height: 600px;
+  max-height: 500px;
+  margin: 2rem;
+  padding: 2rem;
+  overflow-y: auto;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: #ffffff;
 }
 
