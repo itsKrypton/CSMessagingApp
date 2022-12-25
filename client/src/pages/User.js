@@ -8,11 +8,11 @@ export const User = () => {
     const [userInput, setUserInput] = useState("")
 
     var { data, isLoading } = useQuery(["userConversation"], () => {
-        return Axios('http://localhost:3500/users/conversation', {
+        return Axios.get('http://localhost:3500/users/conversation', {
             params: {
                 userID: username
             }
-        }).then(res => res.data)
+        }).then(res => res.data.messages)
     })
 
     const sendNewMessage = () => {

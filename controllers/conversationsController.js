@@ -16,7 +16,7 @@ const getConversation = asyncHandler(async (req, res) => {
     if(!conversation) {
         return res.json([{ message: 'No conversation found'}])
     }
-    res.json(conversation.messages)
+    res.json(conversation)
 })
 
 // @desc Get conversations of all users
@@ -85,17 +85,43 @@ const attachEmpToConversation = asyncHandler(async (req, res) => {
     return res.json(conversation)
 })
 
+// @desc unattaches employee from conversation 
+// @route PATCH /employees/unattach
+// @access Private
+const unattachEmpFromConversation = asyncHandler(async (req, res) => {
+    const { userID, employeeID } = req.body
+
+    const conversation = await Conversations.findOne({userID: userID})
+    conversation.employeeID = null;
+    conversation.save()
+
+    const employee = await Employees.findOne({"employeeID": employeeID})
+    employee.assignedTickets.pull(userID)
+    employee.save()
+
+    return res.json(conversation)
+})
+
 // @desc Updates conversation of employee 
 // @route PATCH /employees/conversation
 // @access Private
 const updateEmpConversation = asyncHandler(async (req, res) => {
-    const { userID, date, message } = req.body
+    const { userID, employeeID, date, message } = req.body
 
     if(!message) {
         return res.status(400).json({ message: 'Message field cannot be empty'})
     }
 
+    if(!employeeID) {
+        return res.status(400).json({ message: 'Invalid data'})
+    }
+
     const conversation = await Conversations.findOne({userID: userID})
+
+    if(conversation?.employeeID === null || conversation?.employeeID !== employeeID) {
+        return res.status(400).json( { message: 'This employee is not assigned to the ticket'})
+    }
+
     const newMessageObject = {"sender": "Support", "message": message, "date": date}
     conversation.messages.push(newMessageObject)
     conversation.save()
@@ -124,6 +150,7 @@ module.exports = {
     getAllConversations,
     initiateUpdateConversation,
     attachEmpToConversation,
+    unattachEmpFromConversation,
     updateEmpConversation,
     deleteConversation
 }

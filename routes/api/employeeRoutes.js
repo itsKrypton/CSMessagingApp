@@ -12,4 +12,7 @@ router.route('/conversation')
     .patch(conversationsController.updateEmpConversation)
     .delete(conversationsController.deleteConversation)
 
+router.route('/unattach')
+    .patch(conversationsController.unattachEmpFromConversation)
+
 module.exports = router

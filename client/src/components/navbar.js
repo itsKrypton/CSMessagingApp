@@ -6,7 +6,7 @@ import { logoutEmployee } from "../pages/storeEmployee"
 export const Navbar = () => {
     const dispatch = useDispatch()
     const username = useSelector((state) => state.user.value.username)
-    const employeeName = useSelector((state) => state.employee.value.employeeName)
+    const employeeName = useSelector((state) => state.employee.value.employeeDetails.employeeID)
     return (
         <div className="navbar">
             <div className="links">

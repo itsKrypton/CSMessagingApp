@@ -16,7 +16,7 @@ export const Home = () => {
             params: {
                 userID: userInput
             }
-        }).then(res => dispatch(loginUser({ username: res.data[0].userID})))
+        }).then(res => dispatch(loginUser({ username: res.data[0].userID })))
 
         navigate('/users')
     }
@@ -27,7 +27,7 @@ export const Home = () => {
             params: {
                 employeeID: employeeInput
             }
-        }).then(res => dispatch(loginEmployee({ employeeName: res.data.employeeID})))
+        }).then(res => dispatch(loginEmployee({ employeeDetails: res.data })))
 
         navigate('/employees')
     }

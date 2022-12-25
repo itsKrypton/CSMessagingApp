@@ -197,3 +197,36 @@ body {
   text-align: left;
 }
 
+.EmployeeContainer {
+  display: flex;
+  width: 1600px;
+  max-width: 1600px;
+  height: 750px;
+  max-height: 750px;
+  margin: 2rem;
+  padding: 1rem;
+  overflow: auto;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: #ffffff;
+  margin-left: 8rem;
+  margin-top: 3rem;
+}
+
+.Tickets {
+  overflow-y: auto;
+  width: 350px;
+  max-width: 350px;
+  background-color: #5E5DF0;
+  border-radius: 15px;
+  justify-content: left;
+}
+
+.Ticket > *:first-child {
+  margin-top: 0;
+}
+
+.Tickets > *:last-child {
+  margin-bottom: 25px;
+}
+

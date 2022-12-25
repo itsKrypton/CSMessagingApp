@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore({
   reducer: {
     user: userReducer,
-    employee: employeeReducer
+    employee: employeeReducer,
   }
 })
 
