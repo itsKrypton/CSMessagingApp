@@ -66,7 +66,7 @@ export const Employee = () => {
         <div className="EmployeeContainer">
             <div className="Tickets">
                 <div className="YourTicketsContainer">
-                    {(employee.assignedTickets?.length > 1) && <h3 id="YourTickets"> Your Tickets </h3>}
+                    {(employee.assignedTickets?.length > 0) && <h3 id="YourTickets"> Your Tickets </h3>}
                     {data?.map((ticket) => {
                         return (
                             <div className="indYourTicketsContainer">
@@ -91,7 +91,9 @@ export const Employee = () => {
                 </div>
             </div>
             <div className="Conversation">
-                <div className="EmployeeChatBox">
+                {
+                    hideBar && 
+                    <div className="EmployeeChatBox">
                     {conversation.messages?.map((data) => {
                         return (
                             <div> 
@@ -100,10 +102,11 @@ export const Employee = () => {
                             </div>
                         )
                     })}
-                </div>
+                    </div>
+                }
                 <div>
-                    {hideBar && <input placeholder="Type here" disabled={!(conversation?.employeeID === employee.employeeID)} id="userInputBox" onChange={(event) => setUserInput(event.target.value)}/>}
-                    {hideBar && <button id="userSendButton" disabled={!(conversation?.employeeID === employee.employeeID)} onClick={sendNewMessage}> Send Message </button>}
+                    {hideBar && <input placeholder="Type here" disabled={!(conversation?.employeeID === employee.employeeID)} id="empInputBox" onChange={(event) => setUserInput(event.target.value)}/>}
+                    {hideBar && <button id="empSendButton" disabled={!(conversation?.employeeID === employee.employeeID)} onClick={sendNewMessage}> Send Message </button>}
                 </div>
             </div>
         </div>
