@@ -1,6 +1,8 @@
 # CSMessagingApp
 
-The application has been built using the MERN (MongpDB, Express.js, React.js and Node.js) stack. 
+The application has been built using the MERN (MongoDB, Express.js, React.js and Node.js) stack. The application consists of two sections, User and Employee. The User section mimics an Android application wherein the users can send their queries. It sends the data to the backend using REST API and stores the data in the MongoDB database.
+
+The employee section shows all the open tickets and the employee can choose to view, close, assign or unassign tickets. 
 
 **Installation**
 
@@ -18,7 +20,7 @@ MongoDB was used as a NoSQL Database.
 The `package.json` in the root directory has all the dependencies listed such as date-fns, dot.env etc.
 For the front end, the `package.json` file in the Client folder mentions the dependencies used such as react-query, axios, react-router.
 
-**Features Implemented:**
+**Features Implemented**
 
 Along with the basic functionality, the application lets you,
 
