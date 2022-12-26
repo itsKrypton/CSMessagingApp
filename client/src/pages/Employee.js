@@ -66,7 +66,7 @@ export const Employee = () => {
         <div className="EmployeeContainer">
             <div className="Tickets">
                 <div className="YourTicketsContainer">
-                    {(employee.assignedTickets?.length > 0) && <h3 id="YourTickets"> Your Tickets </h3>}
+                    <h3 id="YourTickets"> Your Tickets </h3>
                     {data?.map((ticket) => {
                         return (
                             <div className="indYourTicketsContainer">
