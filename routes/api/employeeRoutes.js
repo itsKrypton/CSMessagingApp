@@ -3,7 +3,8 @@ const router = express.Router()
 const employeeController = require('../../controllers/employeesController')
 const conversationsController = require('../../controllers/conversationsController')
 
-router.route('/')
+// /employees/employeeID will be routed here
+router.route('/:employeeID')
     .get(employeeController.getEmployee)
     .patch(conversationsController.attachEmpToConversation)
 

@@ -2,27 +2,32 @@ const Users = require('../models/Users')
 const asyncHandler = require('express-async-handler')
 
 // @desc Get specific user
-// @route GET /users/?userID=(Number)
+// @route GET /users/(:userID)
 // @access Private
 const getUser = asyncHandler(async (req, res) => {
-
-    if(!req.query.userID) {
+    const userID = req.params.userID.trim()
+    if(!userID) {
         return res.status(400).json({ message: 'UserID is required'})
     }
 
-    var user = await Users.find({userID: req.query.userID})
-
-    // If user doesn't exist, create one
-    if(!user?.length) {
-        const userID = req.query.userID
-        const userObject = { userID }
-        user = await Users.create(userObject)
-    
-        if(!user) { 
-            return res.status(400).json({ message: 'Invalid user data received'})
+    Users.findOne({ userID }, async (err, user) => {
+        if(err) {
+            return res.status(500).json({ message: err.message });
         }
-    }
-    res.json(user)
+        if(!user) {
+            const userObject = { userID }
+            let newUser
+            try {
+                newUser = await Users.create(userObject)
+            }
+            catch (err) {
+                return res.status(400).json({ message: err.message })
+            }
+
+            return res.json(newUser)
+        }
+        res.json(user);
+    })
 })
 
 module.exports = {
