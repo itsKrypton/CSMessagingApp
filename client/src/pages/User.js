@@ -7,20 +7,18 @@ export const User = () => {
     const username = useSelector((state) => state.user.value.username)
     const [userInput, setUserInput] = useState("")
 
-    var { data, isLoading } = useQuery(["userConversation"], () => {
-        return Axios.get('http://localhost:3500/users/conversation', {
-            params: {
-                userID: username
-            }
-        }).then(res => res.data.messages)
+    var { data, isLoading, refetch } = useQuery(["userConversation"], async () => {
+        return await Axios.get(`http://localhost:3500/conversations/${username}`)
+            .then(res => res.data.messages)
     })
 
-    const sendNewMessage = () => {
-            Axios.post('http://localhost:3500/users/conversation', {
-            userID: username, 
+    const sendNewMessage = async () => {
+            await Axios.post(`http://localhost:3500/conversations/${username}`, {
             date: Date.now, 
             message: userInput
-        }).then((res) => alert("Message Sent!"))
+        })/* .then((res) => alert("Message Sent!")) */
+        .then(refetch)
+        .then(setUserInput(""))
     }
 
     if(isLoading) {
@@ -43,7 +41,7 @@ export const User = () => {
                 })}
             </div>
             <div className="SendBox">
-                <input placeholder="Type here" id="userInputBox" onChange={(event) => setUserInput(event.target.value)}/>
+                <input placeholder="Type here" id="userInputBox" value={userInput} onChange={(event) => setUserInput(event.target.value)}/>
                 <button id="userSendButton" onClick={sendNewMessage}> Send Message </button>
             </div>
         </div>

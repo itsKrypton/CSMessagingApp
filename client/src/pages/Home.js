@@ -12,22 +12,15 @@ export const Home = () => {
     const navigate = useNavigate()
 
     const signInAsUser = async () => {
-        await Axios.get('http://localhost:3500/users', {
-            params: {
-                userID: userInput
-            }
-        }).then(res => dispatch(loginUser({ username: res.data[0].userID })))
+        await Axios.get(`http://localhost:3500/users/${userInput}`)
+            .then(res => dispatch(loginUser({ username: res.data.userID })))
 
         navigate('/users')
     }
 
     const signInAsEmp = async () => {
-        console.log("Inside fun")
-        await Axios.get('http://localhost:3500/employees', {
-            params: {
-                employeeID: employeeInput
-            }
-        }).then(res => dispatch(loginEmployee({ employeeDetails: res.data })))
+        await Axios.get(`http://localhost:3500/employees/${employeeInput}`)
+            .then(res => dispatch(loginEmployee({ employeeDetails: res.data })))
 
         navigate('/employees')
     }

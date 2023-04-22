@@ -9,8 +9,8 @@ export const Employee = () => {
     const [userInput, setUserInput] = useState("")
     const [hideBar, setHideBar] = useState(false)
 
-    const { data, isLoading } = useQuery(["allTickets"], () => {
-        return Axios.get('http://localhost:3500/employees/conversation').then(res => res.data)
+    const { data, isLoading, refetch } = useQuery(["allTickets"], async () => {
+        return await Axios.get('http://localhost:3500/conversations').then(res => res.data)
     })
 
     if(isLoading) {
@@ -20,46 +20,40 @@ export const Employee = () => {
     }
 
     const unAssignTicket = async (ticketNumber) => {
-        Axios.patch('http://localhost:3500/employees/unattach', {
-            userID: ticketNumber,
-            employeeID: employee.employeeID
-        }).then(() => alert(`Ticket #${ticketNumber} has been unassigned.`))
+        await Axios.patch(`http://localhost:3500/employees/${employee}`, {
+            userID: ticketNumber
+        }).then(refetch)
     }
 
     const assignTicket = async (ticketNumber) => {
-        await Axios.patch('http://localhost:3500/employees', {
-            userID: ticketNumber,
-            employeeID: employee.employeeID
-        }).then(() => alert(`Ticket #${ticketNumber} has been assigned.`))
+        await Axios.post(`http://localhost:3500/employees/${employee.employeeID}`, {
+            userID: ticketNumber
+        }).then(refetch)
     }
 
     const showConversation = async (ticketNumber) => {
-        await Axios.get('http://localhost:3500/users/conversation', {
-            params: {
-                userID: ticketNumber
-            }
-        }).then((res) => {
-            setHideBar(true)
-            setConversation(res.data)
-        })
+        await Axios.get(`http://localhost:3500/conversations/${ticketNumber}`)
+            .then((res) => setConversation(res.data))
+            .then(setHideBar(true))
     }
 
     const sendNewMessage = async () => {
-        await Axios.patch('http://localhost:3500/employees/conversation', {
+        await Axios.patch('http://localhost:3500/conversations', {
             userID: conversation.userID, 
             employeeID: employee.employeeID,
             date: Date.now, 
             message: userInput
         }).then((res) => setConversation(res.data))
+        .then(setUserInput(""))
     }
 
     const closeConversation = async (ticketNumber) => { // Important, delete axios requests need the data keyword to send the request body payload.
-        await Axios.delete('http://localhost:3500/employees/conversation', {
+        await Axios.delete('http://localhost:3500/conversations', {
             data: {
                 userID: ticketNumber,
                 employeeID: employee.employeeID
             }
-        }).then(() => alert(`Ticket #${ticketNumber} has been closed.`))
+        }).then(refetch)
     }
 
     return (
@@ -105,7 +99,7 @@ export const Employee = () => {
                     </div>
                 }
                 <div>
-                    {hideBar && <input placeholder="Type here" disabled={!(conversation?.employeeID === employee.employeeID)} id="empInputBox" onChange={(event) => setUserInput(event.target.value)}/>}
+                    {hideBar && <input placeholder="Type here" disabled={!(conversation?.employeeID === employee.employeeID)} value={userInput} id="empInputBox" onChange={(event) => setUserInput(event.target.value)}/>}
                     {hideBar && <button id="empSendButton" disabled={!(conversation?.employeeID === employee.employeeID)} onClick={sendNewMessage}> Send Message </button>}
                 </div>
             </div>
