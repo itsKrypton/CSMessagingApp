@@ -9,6 +9,4 @@ router.route('/:employeeID')
     .post(conversationsController.attachEmpToConversation) 
     .patch(conversationsController.unattachEmpFromConversation) 
 
-router.route('/unattach').patch(conversationsController.unattachEmpFromConversation)
-
 module.exports = router
