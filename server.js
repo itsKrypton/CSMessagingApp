@@ -30,6 +30,8 @@ app.use('/users', require('./routes/api/userRoutes'))
 
 app.use('/employees', require('./routes/api/employeeRoutes'))
 
+app.use('/conversations', require('./routes/api/conversationRoutes'))
+
 app.all('*', (req, res) => {
     res.status(404)
     if(req.accepts('html')) {

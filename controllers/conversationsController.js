@@ -5,14 +5,15 @@ const Employees = require('../models/Employees')
 const impKeywords = ["payment", "loan", "fees", "salary", "amount"]
 
 // @desc Get conversation of user
-// @route GET /users/conversation?userID:(number)
+// @route GET /conversations/(:userID)
 // @access Private
 const getConversation = asyncHandler(async (req, res) => {
-    if(!req.query.userID) {
+    const userID = req.params.userID.trim()
+    if(!userID) {
         return res.status(400).json({ message: 'UserID is required'})
     }
 
-    const conversation = await Conversations.findOne({userID: req.query.userID})
+    const conversation = await Conversations.findOne({ userID })
     if(!conversation) {
         return res.json([{ message: 'No conversation found'}])
     }
@@ -20,7 +21,7 @@ const getConversation = asyncHandler(async (req, res) => {
 })
 
 // @desc Get conversations of all users
-// @route GET /employees/conversation
+// @route GET /conversations
 // @access Private
 const getAllConversations = asyncHandler(async (req, res) => {
     const conversations = await Conversations.find()
@@ -31,17 +32,18 @@ const getAllConversations = asyncHandler(async (req, res) => {
 })
 
 // @desc Initiates and updates conversation of user
-// @route POST /users/conversation
+// @route POST /conversations/(:userID)
 // @access Private
 const initiateUpdateConversation = asyncHandler(async (req, res) => {
-    const { userID, date, message } = req.body
+    const userID = req.params.userID.trim()
+    const { date, message } = req.body
 
     if(!message) {
         return res.status(400).json({ message: 'Message field cannot be empty'})
     }
 
-    let conversation = await Conversations.findOne({userID: userID})
-    const newMessageObject = {"sender": "Client", "message": message, "date": date}
+    let conversation = await Conversations.findOne({ userID })
+    const newMessageObject = { "sender": "Client", "message": message, "date": date }
     if(conversation) { // Conversation already exists so we simply add the new message into it.
         conversation.messages.push(newMessageObject)
         
@@ -69,16 +71,23 @@ const initiateUpdateConversation = asyncHandler(async (req, res) => {
 })
 
 // @desc Attaches employee to conversation 
-// @route PATCH /employees
+// @route POST /employees/(:employeeID)
 // @access Private
 const attachEmpToConversation = asyncHandler(async (req, res) => {
-    const { userID, employeeID } = req.body
+    const employeeID = req.params.employeeID.trim()
+    const { userID } = req.body
 
     const conversation = await Conversations.findOne({userID: userID})
+    if(!conversation) {
+        return res.status(400).json({ message: 'No conversation found'})
+    }
     conversation.employeeID = employeeID;
     conversation.save()
 
     const employee = await Employees.findOne({"employeeID": employeeID})
+    if(!employee) {
+        return res.status(400).json({ message: 'No employee found'})
+    }
     employee.assignedTickets.push(userID)
     employee.save()
 
@@ -86,16 +95,17 @@ const attachEmpToConversation = asyncHandler(async (req, res) => {
 })
 
 // @desc unattaches employee from conversation 
-// @route PATCH /employees/unattach
+// @route PATCH /employees/(:employeeID)
 // @access Private
 const unattachEmpFromConversation = asyncHandler(async (req, res) => {
-    const { userID, employeeID } = req.body
+    const employeeID = req.params.employeeID.trim()
+    const { userID } = req.body
 
-    const conversation = await Conversations.findOne({userID: userID})
+    const conversation = await Conversations.findOne({ userID })
     conversation.employeeID = null;
     conversation.save()
 
-    const employee = await Employees.findOne({"employeeID": employeeID})
+    const employee = await Employees.findOne({ employeeID })
     employee.assignedTickets.pull(userID)
     employee.save()
 
@@ -103,7 +113,7 @@ const unattachEmpFromConversation = asyncHandler(async (req, res) => {
 })
 
 // @desc Updates conversation of employee 
-// @route PATCH /employees/conversation
+// @route PATCH /conversations
 // @access Private
 const updateEmpConversation = asyncHandler(async (req, res) => {
     const { userID, employeeID, date, message } = req.body
@@ -139,7 +149,7 @@ const updateEmpConversation = asyncHandler(async (req, res) => {
 })
 
 // @desc Deletes a conversation
-// @route DELETE /employees/conversation
+// @route DELETE /conversations
 // @access Private
 const deleteConversation = asyncHandler(async (req, res) => {
     const { userID, employeeID } = req.body

@@ -6,14 +6,9 @@ const conversationsController = require('../../controllers/conversationsControll
 // /employees/employeeID will be routed here
 router.route('/:employeeID')
     .get(employeeController.getEmployee)
-    .patch(conversationsController.attachEmpToConversation)
+    .post(conversationsController.attachEmpToConversation) 
+    .patch(conversationsController.unattachEmpFromConversation) 
 
-router.route('/conversation')
-    .get(conversationsController.getAllConversations)
-    .patch(conversationsController.updateEmpConversation)
-    .delete(conversationsController.deleteConversation)
-
-router.route('/unattach')
-    .patch(conversationsController.unattachEmpFromConversation)
+router.route('/unattach').patch(conversationsController.unattachEmpFromConversation)
 
 module.exports = router
