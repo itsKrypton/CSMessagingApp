@@ -4,6 +4,8 @@ import Axios from "axios"
 import { loginUser } from "./storeUser"
 import { useDispatch } from "react-redux"
 import { loginEmployee } from "./storeEmployee"
+import { Button } from "@material-tailwind/react"
+import { Login } from "@mui/icons-material"
 
 export const Home = () => {
     const [userInput, setUserInput] = useState(0)
@@ -26,11 +28,13 @@ export const Home = () => {
     }
 
     return (
-        <div className="HomeContainer"> 
+        <div /* className="HomeContainer" */> 
             <div className="UserLogin"> 
                 <h1 style={{color: "slateblue"}}> User </h1>
                 <input type="number" inputMode="numeric" id="HomeInputBox" placeholder="Enter your UserID" onChange={(event) => setUserInput(event.target.value)}/>
-                <button id="HomeButton" onClick={signInAsUser}> Login as User </button>
+                <Button className="flex items-center gap-4" onClick={signInAsUser}>
+                    <Login /> Login as User
+                </Button>
             </div>
             <div className="EmployeeLogin"> 
                 <h1 style={{color: "slateblue"}}> Employee </h1>
